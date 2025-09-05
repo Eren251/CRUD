@@ -20,3 +20,14 @@ def nuevo_contacto():
         db.session.commit()
         return redirect(url_for('contactos.listar_contactos'))
     return render_template('form.html')
+
+@contacto_bp.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editar_contacto(id):
+    contacto = Contacto.query.get_or_404(id)
+    if request.method == 'POST':
+        contacto.nombre = request.form['nombre']
+        contacto.telefono = request.form['telefono']
+        contacto.correo = request.form['correo']
+        db.session.commit()
+        return redirect(url_for('contactos.listar_contactos'))
+    return render_template('form.html', contacto=contacto)
