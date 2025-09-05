@@ -31,3 +31,10 @@ def editar_contacto(id):
         db.session.commit()
         return redirect(url_for('contactos.listar_contactos'))
     return render_template('form.html', contacto=contacto)
+
+@contacto_bp.route('/eliminar/<int:id>')
+def eliminar_contacto(id):
+    contacto = Contacto.query.get_or_404(id)
+    db.session.delete(contacto)
+    db.session.commit()
+    return redirect(url_for('contactos.listar_contactos'))
